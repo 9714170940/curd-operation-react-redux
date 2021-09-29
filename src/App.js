@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteUser, viewUser, updateUser, submitUser } from './app/actions/action'
+import { deleteUser, updateUser, submitUser } from './app/actions/action'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Table } from 'react-bootstrap'
+
 
 const App = () => {
 
@@ -15,20 +16,14 @@ const App = () => {
   }
 
   const users = useSelector(state => state?.userList?.users);
-  const view = useSelector(state => state?.userList?.view);
 
-  useEffect(()=>{
-    if(view !== undefined){
-      setUser(view)
-    }
-  },[view])
-
+  
   const dispatch = useDispatch()
   const [user, setUser] = useState(initialUser)
 
   const flexBox = {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center', 
     alignItems: 'center',
     height: '100vh',
     flexDirection: 'column',
@@ -99,7 +94,7 @@ const App = () => {
                   <td>{data.password}</td>
                   <td>{data.isLoggedRemember? 'true':'false'}</td>
                   <td><Button variant='danger' onClick={()=>dispatch(deleteUser(data.id))} >Delete</Button></td>
-                  <td><Button variant='primary' onClick={()=>dispatch(viewUser(i))} >View</Button></td>
+                  <td><Button variant='primary' onClick={()=>setUser(data)} >View</Button></td>
                   <td><Button variant='warning' onClick={()=>dispatch(updateUser(i,user),setUser(initialUser))} >Update</Button></td>
                 </tr>
               )
