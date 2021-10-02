@@ -1,4 +1,4 @@
-import {deleteData,submitData,updateData, sortData, unSortingData} from '../utils/constant'
+import {deleteData,submitData,updateData, sortData, unSortingData, filteringData} from '../utils/constant'
 
 
 export const submitUser = (user) => {
@@ -33,7 +33,14 @@ export const sortingData = (data) => {
 
 export const unSortData = (data) => {
     return {
-        type:sortData,
+        type:unSortingData,
+        payload:data
+    }
+}
+
+export const filterData = (data) => {
+    return {
+        type:filteringData,
         payload:data
     }
 }

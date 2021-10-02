@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {store} from './store'
 import {Provider} from 'react-redux'
+import Routing from './routes';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Routing/>
   </Provider>,
   document.getElementById('root')
 );

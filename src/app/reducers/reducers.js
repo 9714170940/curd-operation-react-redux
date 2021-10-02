@@ -1,4 +1,4 @@
-import {deleteData,sortData,submitData,unSortData,updateData} from '../utils/constant'
+import {deleteData,sortData,submitData,unSortingData,updateData,filteringData} from '../utils/constant'
 
 let initialState = {
     users:[]
@@ -29,7 +29,12 @@ export const userList = (state = initialState,action) => {
                 ...state,
                 users:[...action.payload]
             }
-        case unSortData:
+        case unSortingData:
+            return {
+                ...state,
+                users:[...action.payload]
+            }
+        case filteringData:
             return {
                 ...state,
                 users:[...action.payload]

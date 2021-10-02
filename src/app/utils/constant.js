@@ -7,4 +7,5 @@ export const deleteProduct = 'DELETE_PRODUCT'
 export const updateProduct = 'UPDATE_PRODUCT'
 
 export const sortData = 'SORT_DATA'
-export const unSortData = 'UNSORTED_DATA'
+export const unSortingData = 'UNSORTED_DATA'
+export const filteringData = 'FILTER_DATA'

@@ -1,58 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteUser, updateUser, submitUser, sortingData, unSortData } from './app/actions/action'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Form, Button, Table } from 'react-bootstrap'
+import { Container, Form, Button } from 'react-bootstrap'
+import useFilter from './components/filter';
+import { NavLink } from 'react-router-dom';
 
 
 const App = () => {
 
-  const initialUser = {
-    name: '',
-    email: '',
-    password: '',
-    cPassword: '',
-    isLoggedRemember: false
-  }
-
-  const users = useSelector(state => state?.userList?.users);
-
-  
-  const dispatch = useDispatch()
-  const [user, setUser] = useState(initialUser)
-  const [toggle, setToggle] = useState(false)
-
-  const flexBox = {
-    display: 'flex',
-    justifyContent: 'center', 
-    alignItems: 'center',
-    height: '100vh',
-    flexDirection: 'column',
-  }
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setUser({ ...user, [name]: value })
-  }
-
-  const mergeFunc = () => {
-    setToggle(prev=>!prev);
-    if(toggle){
-      users.sort((a, b) => a.name > b.name && 1 || -1)
-      dispatch(sortingData(users))
-    }
-    else{
-      users.sort((a, b) => a.name < b.name && 1 || -1)
-      dispatch(unSortData(users))
-    }
-  }
-
-
+  const [{user,flexBox, initialUser,setUser, dispatch, submitUser, handleChange}] = useFilter();
 
   return (
     <Container style={flexBox} >
       <Form style={{ width: '400px' }} onSubmit={(e) => {
+        const {filterData,filter,...auth} = user
         e.preventDefault()
-        dispatch(submitUser(user))
+        dispatch(submitUser(auth))
         setUser(initialUser)
       }} >
         <Form.Group className="mb-3" controlId="formBasicName">
@@ -88,35 +50,7 @@ const App = () => {
           SignUp
         </Button>
       </Form>
-      {users.length > 0 ? <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Sr.No.</th>
-            <th onClick={()=>mergeFunc()}>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Login Remember</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            users.map((data, i) => {
-              return (
-                <tr key={i} >
-                  <td>{i+1}</td>
-                  <td>{data.name}</td>
-                  <td>{data.email}</td>
-                  <td>{data.password}</td>
-                  <td>{data.isLoggedRemember? 'true':'false'}</td>
-                  <td><Button variant='danger' onClick={()=>dispatch(deleteUser(data.id))} >Delete</Button></td>
-                  <td><Button variant='primary' onClick={()=>setUser(data)} >View</Button></td>
-                  <td><Button variant='warning' onClick={()=>dispatch(updateUser(i,user),setUser(initialUser))} >Update</Button></td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </Table> : null}
+      <NavLink to='/users'>Users Lists</NavLink>
     </Container>
 
   )
