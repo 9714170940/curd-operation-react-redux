@@ -1,4 +1,4 @@
-import {deleteData,submitData,updateData,viewData, decodeData} from '../utils/constant'
+import {deleteData,submitData,updateData, sortData, unSortingData} from '../utils/constant'
 
 
 export const submitUser = (user) => {
@@ -24,10 +24,16 @@ export const updateUser = (id,updateUser) => {
     }
 }
 
-export const decodeUser = (data) => {
+export const sortingData = (data) => {
     return {
-        type: decodeData,
-        payload: data
+        type:sortData,
+        payload:data
     }
 }
 
+export const unSortData = (data) => {
+    return {
+        type:sortData,
+        payload:data
+    }
+}

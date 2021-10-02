@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteUser, updateUser, submitUser } from './app/actions/action'
+import { deleteUser, updateUser, submitUser, sortingData, unSortData } from './app/actions/action'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Table } from 'react-bootstrap'
 
@@ -20,6 +20,7 @@ const App = () => {
   
   const dispatch = useDispatch()
   const [user, setUser] = useState(initialUser)
+  const [toggle, setToggle] = useState(false)
 
   const flexBox = {
     display: 'flex',
@@ -32,6 +33,20 @@ const App = () => {
     const { name, value } = e.target
     setUser({ ...user, [name]: value })
   }
+
+  const mergeFunc = () => {
+    setToggle(prev=>!prev);
+    if(toggle){
+      users.sort((a, b) => a.name > b.name && 1 || -1)
+      dispatch(sortingData(users))
+    }
+    else{
+      users.sort((a, b) => a.name < b.name && 1 || -1)
+      dispatch(unSortData(users))
+    }
+  }
+
+
 
   return (
     <Container style={flexBox} >
@@ -77,7 +92,7 @@ const App = () => {
         <thead>
           <tr>
             <th>Sr.No.</th>
-            <th>Name</th>
+            <th onClick={()=>mergeFunc()}>Name</th>
             <th>Email</th>
             <th>Password</th>
             <th>Login Remember</th>

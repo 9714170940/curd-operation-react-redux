@@ -1,4 +1,4 @@
-import {deleteData,submitData,updateData,viewData,decodeData} from '../utils/constant'
+import {deleteData,sortData,submitData,unSortData,updateData} from '../utils/constant'
 
 let initialState = {
     users:[]
@@ -18,21 +18,21 @@ export const userList = (state = initialState,action) => {
                 ...state,
                 users:[...cloneUsers]
             }
-        case viewData:
-            return {
-                ...state,
-                view: state.users[action.id]
-            }
         case updateData:
             if(!Object.values(action.payload).includes('')){
                 state.users[action.id] = action.payload
                 return state
             }else{alert("Please fill in the data")}
             return state
-        case decodeData:
-            return{
+        case sortData:
+            return {
                 ...state,
-                oAuth: action.payload,
+                users:[...action.payload]
+            }
+        case unSortData:
+            return {
+                ...state,
+                users:[...action.payload]
             }
         default : return state
     }
